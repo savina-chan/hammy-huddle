@@ -1,0 +1,60 @@
+.nav-buttons-container {
+    display: flex;
+}
+
+.nav-buttons {
+    background-color: var(--primary-color);
+    width: 8rem;
+    height: 3rem;
+    border-radius: 3.125rem;
+    text-align: center;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: var(--font-color);
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.nav-buttons:hover {
+    background-color: var(--secondary-color);
+}
+
+.nav-icons {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.6rem;
+}
+
+@media (max-width: 768px) {
+    .nav-buttons {
+        width: 6rem;
+        height: 2.25rem;
+        font-size: 0.75rem;
+        margin-left: 0.75rem;
+        margin-right: 0.75rem;
+    }
+    .nav-icons {
+        width: 1.125rem;
+        height: 1.125rem;
+        margin-right: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-buttons {
+        width: 4rem;
+        height: 1.5rem;
+        font-size: 0.5rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+    .nav-icons {
+        width: 0.75rem;
+        height: 0.75rem;
+        margin-right: 0.6rem;
+    }
+}
