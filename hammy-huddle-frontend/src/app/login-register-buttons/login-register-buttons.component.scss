@@ -1,0 +1,39 @@
+.lr-buttons-container {
+    display: flex;
+}
+
+.lr-buttons {
+    background-color: var(--primary-color);
+    width: 5.9rem;
+    height: 2.5rem;
+    border-radius: 3.125rem;
+    text-align: center;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--font-color);
+    font-size: 1rem;
+    margin-right: 1rem;
+}
+
+.lr-buttons:hover {
+    background-color: var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+    .lr-buttons {
+        width: 4.425rem;
+        height: 1.875rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .lr-buttons {
+        width: 2.95rem;
+        height: 1.25rem;
+        font-size: 0.5rem;
+    }
+}

@@ -9,6 +9,9 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { GuidePageComponent } from './guide-page/guide-page.component';
 import { ForumPageComponent } from './forum-page/forum-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { HeaderComponent } from './header/header.component';
+import { LoginRegisterButtonsComponent } from './login-register-buttons/login-register-buttons.component';
+import { NavButtonsComponent } from './nav-buttons/nav-buttons.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     RegisterPageComponent,
     GuidePageComponent,
     ForumPageComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    HeaderComponent,
+    LoginRegisterButtonsComponent,
+    NavButtonsComponent
   ],
   imports: [
     BrowserModule,
