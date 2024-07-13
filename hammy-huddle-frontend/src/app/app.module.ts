@@ -14,6 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginRegisterButtonsComponent } from './login-register-buttons/login-register-buttons.component';
 import { NavButtonsComponent } from './nav-buttons/nav-buttons.component';
 import { HttpClientModule } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
