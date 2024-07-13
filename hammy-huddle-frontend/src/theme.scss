@@ -1,0 +1,95 @@
+// Import Angular Material theming functionality
+@use '@angular/material' as mat;
+
+// Extract the CSS variables into SCSS variables
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$tertiary-color: var(--tertiary-color);
+$quaternary-color: var(--quaternary-color);
+$background-color: var(--background-color);
+$font-color: var(--font-color);
+
+// Define custom palettes using the extracted CSS variables
+$hammy-huddle-frontend-primary: mat.define-palette((
+  50: $primary-color,
+  100: $primary-color,
+  200: $primary-color,
+  300: $primary-color,
+  400: $primary-color,
+  500: $primary-color,
+  600: $primary-color,
+  700: $primary-color,
+  800: $primary-color,
+  900: $primary-color,
+  A100: $primary-color,
+  A200: $primary-color,
+  A400: $primary-color,
+  A700: $primary-color,
+  contrast: (
+    50: $font-color,
+    100: $font-color,
+    200: $font-color,
+    300: $font-color,
+    400: $font-color,
+    500: $font-color,
+    600: $font-color,
+    700: $font-color,
+    800: $font-color,
+    900: $font-color,
+    A100: $font-color,
+    A200: $font-color,
+    A400: $font-color,
+    A700: $font-color,
+  ),
+));
+
+$hammy-huddle-frontend-accent: mat.define-palette((
+  50: $secondary-color,
+  100: $secondary-color,
+  200: $secondary-color,
+  300: $secondary-color,
+  400: $secondary-color,
+  500: $secondary-color,
+  600: $secondary-color,
+  700: $secondary-color,
+  800: $secondary-color,
+  900: $secondary-color,
+  A100: $secondary-color,
+  A200: $secondary-color,
+  A400: $secondary-color,
+  A700: $secondary-color,
+  contrast: (
+    50: $font-color,
+    100: $font-color,
+    200: $font-color,
+    300: $font-color,
+    400: $font-color,
+    500: $font-color,
+    600: $font-color,
+    700: $font-color,
+    800: $font-color,
+    900: $font-color,
+    A100: $font-color,
+    A200: $font-color,
+    A400: $font-color,
+    A700: $font-color,
+  ),
+));
+
+// Define the warn palette (defaults to red, customize if needed)
+$hammy-huddle-frontend-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object
+$hammy-huddle-frontend-theme: mat.define-light-theme((
+  color: (
+    primary: $hammy-huddle-frontend-primary,
+    accent: $hammy-huddle-frontend-accent,
+    warn: $hammy-huddle-frontend-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// Include the Angular Material core styles and all component themes
+@include mat.core();
+@include mat.all-component-themes($hammy-huddle-frontend-theme);
