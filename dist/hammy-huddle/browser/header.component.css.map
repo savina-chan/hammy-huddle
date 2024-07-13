@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/header/header.component.scss"],
+  "sourcesContent": ["app-login-register-buttons {\n    position: absolute;\n    top: 4rem;\n    right: 0.1rem;\n}"],
+  "mappings": ";AAAA;AACI,YAAA;AACA,OAAA;AACA,SAAA;;",
+  "names": []
+}

@@ -2,13 +2,13 @@
 <div class="register-form">
     <h1>Register</h1>
     <div class = "form-input">
-        <form [formGroup]="formRegister">
+        <form [formGroup]="formRegister" (ngSubmit)="postToDB($event)">
             <input type="text" id="email" placeholder="Email" name="email" required formControlName="email"><br>
             <input type="text" id="username" placeholder="Username" name ="username" formControlName="username"><br>
             <input [type]="passwordFieldType" id="password" placeholder="Password (min. 8 characters)" name="password" required formControlName="password"><br>
             <!-- <input type="checkbox" id="showPassword" (change)="togglePasswordVisibility()">Show Password<br>
             <div class="submit-button">Register</div> -->
-            <div class="submit-button">Submit</div>
+            <div class="submit-button" (click)="postToDB($event)">Submit</div>
         </form>
     </div>
     <h4>Have an account? <a routerLink="/login">Login</a></h4>
