@@ -1,3 +1,35 @@
 /* src/styles.scss */
+:root {
+  --primary-color: #BED7DC;
+  --secondary-color: #B3C8CF;
+  --tertiary-color: #899AA7;
+  --quaternary-color: #5F6D78;
+  --background-color: #F5F3EA;
+  --font-color: black;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./media/Roboto-Regular.ttf");
+}
+body {
+  background-color: var(--background-color);
+  font-family: "Roboto";
+  margin: 2rem;
+}
+.logo {
+  height: 9.5rem;
+  border-radius: 25%;
+}
+@media (max-width: 768px) {
+  .logo {
+    height: 7.125rem;
+  }
+}
+@media (max-width: 480px) {
+  .logo {
+    height: 4.75rem;
+  }
+}
+
 /* angular:styles/global:styles */
 /*# sourceMappingURL=styles.css.map */

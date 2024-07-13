@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-page',
@@ -9,6 +11,8 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
 export class RegisterPageComponent {
   formRegister!: FormGroup;
   passwordFieldType: string = 'password';
+
+  constructor( private apiService: ApiService, private router: Router){}
 
   ngOnInit() {
     this.formRegister = new FormGroup({
@@ -44,6 +48,25 @@ export class RegisterPageComponent {
 
   getPassword() {
     return this.formRegister.get("password")?.value|| '';
+  }
+
+  postToDB(event: Event){
+    event.preventDefault()
+    const payload = {
+      email: this.getEmail(),
+      username: this.getUsername(),
+      password: this.getPassword()
+    };
+    console.log(payload)
+    
+    this.apiService.sendRegister(payload)
+      .subscribe(response => {
+        
+        alert('Registration Successful!');
+        this.router.navigate(['/login']);
+      }, error => {
+        console.error('Error:', error);
+    });
   }
 
   complexityValidator(): ValidatorFn {

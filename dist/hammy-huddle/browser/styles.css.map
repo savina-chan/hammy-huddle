@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": [],
-  "sourcesContent": [],
-  "mappings": "",
+  "sources": ["src/styles.scss"],
+  "sourcesContent": ["/* You can add global styles to this file, and also import other style files */\n:root {\n    --primary-color: #BED7DC;\n    --secondary-color: #B3C8CF;\n    --tertiary-color: #899AA7;\n    --quaternary-color: #5F6D78;\n    --background-color: #F5F3EA;\n    --font-color: black;\n}\n\n@font-face {\n    font-family: \"Roboto\";\n    src: url(\"assets/font-roboto/Roboto-Regular.ttf\");\n}\n\nbody {\n    background-color: var(--background-color);\n    font-family: \"Roboto\";\n    margin: 2rem;\n}\n\n.logo {\n    height: 9.5rem;\n    border-radius: 25%;\n    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);\n}\n\n@media (max-width: 768px) {\n    .logo {\n        height: 7.125rem;\n    }\n}\n\n@media (max-width: 480px) {\n    .logo {\n        height: 4.75rem;\n    }\n}"],
+  "mappings": ";AACA;AACI,mBAAA;AACA,qBAAA;AACA,oBAAA;AACA,sBAAA;AACA,sBAAA;AACA,gBAAA;;AAGJ;AACI,eAAA;AACA,OAAA;;AAGJ;AACI,oBAAA,IAAA;AACA,eAAA;AACA,UAAA;;AAGJ,CAAA;AACI,UAAA;AACA,iBAAA;;AAIJ,OAAA,CAAA,SAAA,EAAA;AACI,GAPJ;AAQQ,YAAA;;;AAIR,OAAA,CAAA,SAAA,EAAA;AACI,GAbJ;AAcQ,YAAA;;;",
   "names": []
 }
