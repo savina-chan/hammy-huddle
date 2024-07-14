@@ -16,6 +16,10 @@ import { NavButtonsComponent } from './nav-buttons/nav-buttons.component';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +39,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   providers: [
     provideAnimationsAsync()
