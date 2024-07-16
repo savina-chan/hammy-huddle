@@ -38,7 +38,45 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+const statisticsSchema = new mongoose.Schema({
+  username: {
+    type: String
+  },
+  contributions: {
+    type: Number
+  }
+});
+
+const postSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  author: {
+    type: String,
+    required: true,
+  },
+  postId: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  tags:  {
+    type: Array,
+  },
+  images:{
+    type: Array
+  }
+});
+
 const User = mongoose.model("User", userSchema);
+
+const forumPost = mongoose.model("forumPosts", postSchema);
+
+const Stats = mongoose.model("statistics", statisticsSchema);
 
 app.use(express.json());
 
@@ -107,7 +145,51 @@ app.post("/api/register", async (req, res) => {
       password: hashedPassword,
     });
     const savedUser = await newUser.save();
+
+    const newStats = new Stats({
+      username,
+      contributions: 0
+    });
+    const savedStats = await newStats.save();
+
     res.status(201).json(savedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post("/api/forumPost", authenticateToken, async (req, res) => {
+  const { title, content, tags, images} = req.body;
+  const author = req.user.username;
+
+  try {
+
+    const userStats = await Stats.findOne({"username": author});
+
+    const postId = author + userStats.contributions;
+
+    const newPost = new forumPost({
+      title,
+      author,
+      postId,
+      content,
+      tags, 
+      images
+    });
+
+    const updatedStats = await Stats.findOneAndUpdate({"username": author}, {$inc:{contributions: 1}});
+
+    const savedPost = await newPost.save();
+    res.status(201).json(savedPost);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/api/getForumPosts", async (req, res) =>{
+  try {
+    const posts = await forumPost.find();
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

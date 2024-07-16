@@ -9,7 +9,7 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Login } from "./login";
-
+import { Post } from "./forum-page/forum-page.component"
 import { supervisor } from "./supervisor.service";
 
 @Injectable({
@@ -20,6 +20,8 @@ export class ApiService {
 
   url: string = "http://localhost:8080/";
 
+  /* ***************** API ROUTES ******************* */
+
   sendRegister(data: { username: string; email: string; password: string }) {
     return this.http.post(this.url + "api/register", data);
   }
@@ -27,6 +29,26 @@ export class ApiService {
   sendLogin(data: { email: string; password: string }) {
     return this.http.post<Login>(this.url + "api/login", data);
   }
+
+  sendForumPost(data:{title: string, content: string, tags: Array<string>, images: Array<string>}){
+    const token = supervisor.getItem("token");
+    if (token) {
+      const headers = new HttpHeaders({
+        authorization: token,
+      });
+      return this.http.post(this.url + "api/forumPost", data, {
+        headers,
+      });
+    }
+    // return an empty object
+    return new Observable<Object>();
+  }
+
+  getForumPost(): Observable<Post[]>{
+    return this.http.get<Post[]>(this.url + "api/getForumPosts");
+  }
+
+  /* ************* LOGIN HELPERS ************** */
 
   logout() {
     supervisor.removeItem("username");

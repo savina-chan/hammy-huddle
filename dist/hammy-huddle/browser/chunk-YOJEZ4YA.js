@@ -1039,6 +1039,33 @@ var ConnectableObservable = class extends Observable {
   }
 };
 
+// node_modules/rxjs/dist/esm/internal/scheduler/animationFrameProvider.js
+var animationFrameProvider = {
+  schedule(callback) {
+    let request = requestAnimationFrame;
+    let cancel = cancelAnimationFrame;
+    const { delegate } = animationFrameProvider;
+    if (delegate) {
+      request = delegate.requestAnimationFrame;
+      cancel = delegate.cancelAnimationFrame;
+    }
+    const handle = request((timestamp) => {
+      cancel = void 0;
+      callback(timestamp);
+    });
+    return new Subscription(() => cancel === null || cancel === void 0 ? void 0 : cancel(handle));
+  },
+  requestAnimationFrame(...args) {
+    const { delegate } = animationFrameProvider;
+    return ((delegate === null || delegate === void 0 ? void 0 : delegate.requestAnimationFrame) || requestAnimationFrame)(...args);
+  },
+  cancelAnimationFrame(...args) {
+    const { delegate } = animationFrameProvider;
+    return ((delegate === null || delegate === void 0 ? void 0 : delegate.cancelAnimationFrame) || cancelAnimationFrame)(...args);
+  },
+  delegate: void 0
+};
+
 // node_modules/rxjs/dist/esm/internal/util/ObjectUnsubscribedError.js
 var ObjectUnsubscribedError = createErrorClass((_super) => function ObjectUnsubscribedErrorImpl() {
   _super(this);
@@ -1363,6 +1390,76 @@ var AsyncAction = class extends Action {
   }
 };
 
+// node_modules/rxjs/dist/esm/internal/util/Immediate.js
+var nextHandle = 1;
+var resolved;
+var activeHandles = {};
+function findAndClearHandle(handle) {
+  if (handle in activeHandles) {
+    delete activeHandles[handle];
+    return true;
+  }
+  return false;
+}
+var Immediate = {
+  setImmediate(cb) {
+    const handle = nextHandle++;
+    activeHandles[handle] = true;
+    if (!resolved) {
+      resolved = Promise.resolve();
+    }
+    resolved.then(() => findAndClearHandle(handle) && cb());
+    return handle;
+  },
+  clearImmediate(handle) {
+    findAndClearHandle(handle);
+  }
+};
+
+// node_modules/rxjs/dist/esm/internal/scheduler/immediateProvider.js
+var { setImmediate, clearImmediate } = Immediate;
+var immediateProvider = {
+  setImmediate(...args) {
+    const { delegate } = immediateProvider;
+    return ((delegate === null || delegate === void 0 ? void 0 : delegate.setImmediate) || setImmediate)(...args);
+  },
+  clearImmediate(handle) {
+    const { delegate } = immediateProvider;
+    return ((delegate === null || delegate === void 0 ? void 0 : delegate.clearImmediate) || clearImmediate)(handle);
+  },
+  delegate: void 0
+};
+
+// node_modules/rxjs/dist/esm/internal/scheduler/AsapAction.js
+var AsapAction = class extends AsyncAction {
+  constructor(scheduler, work) {
+    super(scheduler, work);
+    this.scheduler = scheduler;
+    this.work = work;
+  }
+  requestAsyncId(scheduler, id, delay = 0) {
+    if (delay !== null && delay > 0) {
+      return super.requestAsyncId(scheduler, id, delay);
+    }
+    scheduler.actions.push(this);
+    return scheduler._scheduled || (scheduler._scheduled = immediateProvider.setImmediate(scheduler.flush.bind(scheduler, void 0)));
+  }
+  recycleAsyncId(scheduler, id, delay = 0) {
+    var _a;
+    if (delay != null ? delay > 0 : this.delay > 0) {
+      return super.recycleAsyncId(scheduler, id, delay);
+    }
+    const { actions } = scheduler;
+    if (id != null && ((_a = actions[actions.length - 1]) === null || _a === void 0 ? void 0 : _a.id) !== id) {
+      immediateProvider.clearImmediate(id);
+      if (scheduler._scheduled === id) {
+        scheduler._scheduled = void 0;
+      }
+    }
+    return void 0;
+  }
+};
+
 // node_modules/rxjs/dist/esm/internal/Scheduler.js
 var Scheduler = class _Scheduler {
   constructor(schedulerActionCtor, now = _Scheduler.now) {
@@ -1405,8 +1502,91 @@ var AsyncScheduler = class extends Scheduler {
   }
 };
 
+// node_modules/rxjs/dist/esm/internal/scheduler/AsapScheduler.js
+var AsapScheduler = class extends AsyncScheduler {
+  flush(action) {
+    this._active = true;
+    const flushId = this._scheduled;
+    this._scheduled = void 0;
+    const { actions } = this;
+    let error;
+    action = action || actions.shift();
+    do {
+      if (error = action.execute(action.state, action.delay)) {
+        break;
+      }
+    } while ((action = actions[0]) && action.id === flushId && actions.shift());
+    this._active = false;
+    if (error) {
+      while ((action = actions[0]) && action.id === flushId && actions.shift()) {
+        action.unsubscribe();
+      }
+      throw error;
+    }
+  }
+};
+
+// node_modules/rxjs/dist/esm/internal/scheduler/asap.js
+var asapScheduler = new AsapScheduler(AsapAction);
+
 // node_modules/rxjs/dist/esm/internal/scheduler/async.js
 var asyncScheduler = new AsyncScheduler(AsyncAction);
+var async = asyncScheduler;
+
+// node_modules/rxjs/dist/esm/internal/scheduler/AnimationFrameAction.js
+var AnimationFrameAction = class extends AsyncAction {
+  constructor(scheduler, work) {
+    super(scheduler, work);
+    this.scheduler = scheduler;
+    this.work = work;
+  }
+  requestAsyncId(scheduler, id, delay = 0) {
+    if (delay !== null && delay > 0) {
+      return super.requestAsyncId(scheduler, id, delay);
+    }
+    scheduler.actions.push(this);
+    return scheduler._scheduled || (scheduler._scheduled = animationFrameProvider.requestAnimationFrame(() => scheduler.flush(void 0)));
+  }
+  recycleAsyncId(scheduler, id, delay = 0) {
+    var _a;
+    if (delay != null ? delay > 0 : this.delay > 0) {
+      return super.recycleAsyncId(scheduler, id, delay);
+    }
+    const { actions } = scheduler;
+    if (id != null && ((_a = actions[actions.length - 1]) === null || _a === void 0 ? void 0 : _a.id) !== id) {
+      animationFrameProvider.cancelAnimationFrame(id);
+      scheduler._scheduled = void 0;
+    }
+    return void 0;
+  }
+};
+
+// node_modules/rxjs/dist/esm/internal/scheduler/AnimationFrameScheduler.js
+var AnimationFrameScheduler = class extends AsyncScheduler {
+  flush(action) {
+    this._active = true;
+    const flushId = this._scheduled;
+    this._scheduled = void 0;
+    const { actions } = this;
+    let error;
+    action = action || actions.shift();
+    do {
+      if (error = action.execute(action.state, action.delay)) {
+        break;
+      }
+    } while ((action = actions[0]) && action.id === flushId && actions.shift());
+    this._active = false;
+    if (error) {
+      while ((action = actions[0]) && action.id === flushId && actions.shift()) {
+        action.unsubscribe();
+      }
+      throw error;
+    }
+  }
+};
+
+// node_modules/rxjs/dist/esm/internal/scheduler/animationFrame.js
+var animationFrameScheduler = new AnimationFrameScheduler(AnimationFrameAction);
 
 // node_modules/rxjs/dist/esm/internal/observable/empty.js
 var EMPTY = new Observable((subscriber) => subscriber.complete());
@@ -1862,6 +2042,11 @@ var EmptyError = createErrorClass((_super) => function EmptyErrorImpl() {
   this.message = "no elements in sequence";
 });
 
+// node_modules/rxjs/dist/esm/internal/util/isDate.js
+function isValidDate(value) {
+  return value instanceof Date && !isNaN(value);
+}
+
 // node_modules/rxjs/dist/esm/internal/operators/map.js
 function map(project, thisArg) {
   return operate((source, subscriber) => {
@@ -2077,6 +2262,75 @@ function forkJoin(...args) {
   return resultSelector ? result.pipe(mapOneOrManyArgs(resultSelector)) : result;
 }
 
+// node_modules/rxjs/dist/esm/internal/observable/fromEvent.js
+var nodeEventEmitterMethods = ["addListener", "removeListener"];
+var eventTargetMethods = ["addEventListener", "removeEventListener"];
+var jqueryMethods = ["on", "off"];
+function fromEvent(target, eventName, options, resultSelector) {
+  if (isFunction(options)) {
+    resultSelector = options;
+    options = void 0;
+  }
+  if (resultSelector) {
+    return fromEvent(target, eventName, options).pipe(mapOneOrManyArgs(resultSelector));
+  }
+  const [add, remove2] = isEventTarget(target) ? eventTargetMethods.map((methodName) => (handler) => target[methodName](eventName, handler, options)) : isNodeStyleEventEmitter(target) ? nodeEventEmitterMethods.map(toCommonHandlerRegistry(target, eventName)) : isJQueryStyleEventEmitter(target) ? jqueryMethods.map(toCommonHandlerRegistry(target, eventName)) : [];
+  if (!add) {
+    if (isArrayLike(target)) {
+      return mergeMap((subTarget) => fromEvent(subTarget, eventName, options))(innerFrom(target));
+    }
+  }
+  if (!add) {
+    throw new TypeError("Invalid event target");
+  }
+  return new Observable((subscriber) => {
+    const handler = (...args) => subscriber.next(1 < args.length ? args : args[0]);
+    add(handler);
+    return () => remove2(handler);
+  });
+}
+function toCommonHandlerRegistry(target, eventName) {
+  return (methodName) => (handler) => target[methodName](eventName, handler);
+}
+function isNodeStyleEventEmitter(target) {
+  return isFunction(target.addListener) && isFunction(target.removeListener);
+}
+function isJQueryStyleEventEmitter(target) {
+  return isFunction(target.on) && isFunction(target.off);
+}
+function isEventTarget(target) {
+  return isFunction(target.addEventListener) && isFunction(target.removeEventListener);
+}
+
+// node_modules/rxjs/dist/esm/internal/observable/timer.js
+function timer(dueTime = 0, intervalOrScheduler, scheduler = async) {
+  let intervalDuration = -1;
+  if (intervalOrScheduler != null) {
+    if (isScheduler(intervalOrScheduler)) {
+      scheduler = intervalOrScheduler;
+    } else {
+      intervalDuration = intervalOrScheduler;
+    }
+  }
+  return new Observable((subscriber) => {
+    let due = isValidDate(dueTime) ? +dueTime - scheduler.now() : dueTime;
+    if (due < 0) {
+      due = 0;
+    }
+    let n = 0;
+    return scheduler.schedule(function() {
+      if (!subscriber.closed) {
+        subscriber.next(n++);
+        if (0 <= intervalDuration) {
+          this.schedule(void 0, intervalDuration);
+        } else {
+          subscriber.complete();
+        }
+      }
+    }, due);
+  });
+}
+
 // node_modules/rxjs/dist/esm/internal/observable/merge.js
 function merge(...args) {
   const scheduler = popScheduler(args);
@@ -2091,6 +2345,46 @@ function filter(predicate, thisArg) {
     let index = 0;
     source.subscribe(createOperatorSubscriber(subscriber, (value) => predicate.call(thisArg, value, index++) && subscriber.next(value)));
   });
+}
+
+// node_modules/rxjs/dist/esm/internal/operators/audit.js
+function audit(durationSelector) {
+  return operate((source, subscriber) => {
+    let hasValue = false;
+    let lastValue = null;
+    let durationSubscriber = null;
+    let isComplete = false;
+    const endDuration = () => {
+      durationSubscriber === null || durationSubscriber === void 0 ? void 0 : durationSubscriber.unsubscribe();
+      durationSubscriber = null;
+      if (hasValue) {
+        hasValue = false;
+        const value = lastValue;
+        lastValue = null;
+        subscriber.next(value);
+      }
+      isComplete && subscriber.complete();
+    };
+    const cleanupDuration = () => {
+      durationSubscriber = null;
+      isComplete && subscriber.complete();
+    };
+    source.subscribe(createOperatorSubscriber(subscriber, (value) => {
+      hasValue = true;
+      lastValue = value;
+      if (!durationSubscriber) {
+        innerFrom(durationSelector(value)).subscribe(durationSubscriber = createOperatorSubscriber(subscriber, endDuration, cleanupDuration));
+      }
+    }, () => {
+      isComplete = true;
+      (!hasValue || !durationSubscriber || durationSubscriber.closed) && subscriber.complete();
+    }));
+  });
+}
+
+// node_modules/rxjs/dist/esm/internal/operators/auditTime.js
+function auditTime(duration, scheduler = asyncScheduler) {
+  return audit(() => timer(duration, scheduler));
 }
 
 // node_modules/rxjs/dist/esm/internal/operators/catchError.js
@@ -2291,6 +2585,20 @@ function last2(predicate, defaultValue) {
   return (source) => source.pipe(predicate ? filter((v, i) => predicate(v, i, source)) : identity, takeLast(1), hasDefaultValue ? defaultIfEmpty(defaultValue) : throwIfEmpty(() => new EmptyError()));
 }
 
+// node_modules/rxjs/dist/esm/internal/operators/pairwise.js
+function pairwise() {
+  return operate((source, subscriber) => {
+    let prev;
+    let hasPrev = false;
+    source.subscribe(createOperatorSubscriber(subscriber, (value) => {
+      const p = prev;
+      prev = value;
+      hasPrev && subscriber.next([p, value]);
+      hasPrev = true;
+    }));
+  });
+}
+
 // node_modules/rxjs/dist/esm/internal/operators/scan.js
 function scan(accumulator, seed) {
   return operate(scanInternals(accumulator, seed, arguments.length >= 2, true));
@@ -2428,6 +2736,18 @@ function takeUntil(notifier) {
   return operate((source, subscriber) => {
     innerFrom(notifier).subscribe(createOperatorSubscriber(subscriber, () => subscriber.complete(), noop));
     !subscriber.closed && source.subscribe(subscriber);
+  });
+}
+
+// node_modules/rxjs/dist/esm/internal/operators/takeWhile.js
+function takeWhile(predicate, inclusive = false) {
+  return operate((source, subscriber) => {
+    let index = 0;
+    source.subscribe(createOperatorSubscriber(subscriber, (value) => {
+      const result = predicate(value, index++);
+      (result || inclusive) && subscriber.next(value);
+      !result && subscriber.complete();
+    }));
   });
 }
 
@@ -12010,7 +12330,7 @@ function \u0275\u0275CopyDefinitionFeature(definition) {
 }
 function \u0275\u0275HostDirectivesFeature(rawHostDirectives) {
   const feature = (definition) => {
-    const resolved = (Array.isArray(rawHostDirectives) ? rawHostDirectives : rawHostDirectives()).map((dir) => {
+    const resolved2 = (Array.isArray(rawHostDirectives) ? rawHostDirectives : rawHostDirectives()).map((dir) => {
       return typeof dir === "function" ? { directive: resolveForwardRef(dir), inputs: EMPTY_OBJ, outputs: EMPTY_OBJ } : {
         directive: resolveForwardRef(dir.directive),
         inputs: bindingArrayToMap(dir.inputs),
@@ -12019,9 +12339,9 @@ function \u0275\u0275HostDirectivesFeature(rawHostDirectives) {
     });
     if (definition.hostDirectives === null) {
       definition.findHostDirectiveDefs = findHostDirectiveDefs;
-      definition.hostDirectives = resolved;
+      definition.hostDirectives = resolved2;
     } else {
-      definition.hostDirectives.unshift(...resolved);
+      definition.hostDirectives.unshift(...resolved2);
     }
   };
   feature.ngInherit = true;
@@ -21292,8 +21612,8 @@ var _Location = class _Location {
    * @returns True if the given URL path is equal to the current normalized path, false
    * otherwise.
    */
-  isCurrentPathEqualTo(path, query = "") {
-    return this.path() == this.normalize(path + normalizeQueryParams(query));
+  isCurrentPathEqualTo(path, query2 = "") {
+    return this.path() == this.normalize(path + normalizeQueryParams(query2));
   }
   /**
    * Normalizes a URL path by stripping any trailing slashes.
@@ -21331,9 +21651,9 @@ var _Location = class _Location {
    * @param state Location history state.
    *
    */
-  go(path, query = "", state2 = null) {
-    this._locationStrategy.pushState(state2, "", path, query);
-    this._notifyUrlChangeListeners(this.prepareExternalUrl(path + normalizeQueryParams(query)), state2);
+  go(path, query2 = "", state2 = null) {
+    this._locationStrategy.pushState(state2, "", path, query2);
+    this._notifyUrlChangeListeners(this.prepareExternalUrl(path + normalizeQueryParams(query2)), state2);
   }
   /**
    * Changes the browser's URL to a normalized version of the given URL, and replaces
@@ -21343,9 +21663,9 @@ var _Location = class _Location {
    * @param query Query parameters.
    * @param state Location history state.
    */
-  replaceState(path, query = "", state2 = null) {
-    this._locationStrategy.replaceState(state2, "", path, query);
-    this._notifyUrlChangeListeners(this.prepareExternalUrl(path + normalizeQueryParams(query)), state2);
+  replaceState(path, query2 = "", state2 = null) {
+    this._locationStrategy.replaceState(state2, "", path, query2);
+    this._notifyUrlChangeListeners(this.prepareExternalUrl(path + normalizeQueryParams(query2)), state2);
   }
   /**
    * Navigates forward in the platform's history.
@@ -23792,8 +24112,8 @@ function invalidPipeArgumentError(type, value) {
   return new RuntimeError(2100, ngDevMode && `InvalidPipeArgument: '${value}' for pipe '${stringify(type)}'`);
 }
 var SubscribableStrategy = class {
-  createSubscription(async, updateLatestValue) {
-    return untracked(() => async.subscribe({
+  createSubscription(async2, updateLatestValue) {
+    return untracked(() => async2.subscribe({
       next: updateLatestValue,
       error: (e) => {
         throw e;
@@ -23805,8 +24125,8 @@ var SubscribableStrategy = class {
   }
 };
 var PromiseStrategy = class {
-  createSubscription(async, updateLatestValue) {
-    return async.then(updateLatestValue, (e) => {
+  createSubscription(async2, updateLatestValue) {
+    return async2.then(updateLatestValue, (e) => {
       throw e;
     });
   }
@@ -23868,8 +24188,8 @@ var _AsyncPipe = class _AsyncPipe {
     this._subscription = null;
     this._obj = null;
   }
-  _updateLatestValue(async, value) {
-    if (async === this._obj) {
+  _updateLatestValue(async2, value) {
+    if (async2 === this._obj) {
       this._latestValue = value;
       if (this.markForCheckOnValueUpdate) {
         this._ref?.markForCheck();
@@ -25738,6 +26058,20 @@ function transition(stateChangeExpr, steps, options = null) {
     options
   };
 }
+function animateChild(options = null) {
+  return {
+    type: AnimationMetadataType.AnimateChild,
+    options
+  };
+}
+function query(selector, animation, options = null) {
+  return {
+    type: AnimationMetadataType.Query,
+    selector,
+    animation,
+    options
+  };
+}
 var _AnimationBuilder = class _AnimationBuilder {
 };
 _AnimationBuilder.\u0275fac = function AnimationBuilder_Factory(t) {
@@ -26130,6 +26464,9 @@ export {
   ConnectableObservable,
   Subject,
   BehaviorSubject,
+  ReplaySubject,
+  asapScheduler,
+  animationFrameScheduler,
   EMPTY,
   from,
   of,
@@ -26143,8 +26480,10 @@ export {
   concat,
   defer,
   forkJoin,
+  fromEvent,
   merge,
   filter,
+  auditTime,
   catchError,
   concatMap,
   debounceTime,
@@ -26156,12 +26495,15 @@ export {
   first,
   takeLast,
   last2 as last,
+  pairwise,
   scan,
+  share,
   shareReplay,
   skip,
   startWith,
   switchMap,
   takeUntil,
+  takeWhile,
   tap,
   XSS_SECURITY_URL,
   RuntimeError,
@@ -26196,6 +26538,7 @@ export {
   ɵɵrestoreView,
   ɵɵresetView,
   ɵɵnamespaceSVG,
+  ɵɵnamespaceHTML,
   ɵɵgetInheritedFactory,
   ɵɵinjectAttribute,
   Attribute,
@@ -26252,7 +26595,11 @@ export {
   ɵɵstyleProp,
   ɵɵclassProp,
   ɵɵclassMap,
+  ɵɵclassMapInterpolate1,
   ɵɵconditional,
+  ɵɵrepeaterTrackByIdentity,
+  ɵɵrepeaterCreate,
+  ɵɵrepeater,
   ɵɵelementStart,
   ɵɵelementEnd,
   ɵɵelement,
@@ -26270,8 +26617,14 @@ export {
   ɵɵtext,
   ɵɵtextInterpolate,
   ɵɵtextInterpolate1,
+  ɵɵtwoWayProperty,
+  ɵɵtwoWayBindingSet,
+  ɵɵtwoWayListener,
   ɵɵProvidersFeature,
   ɵɵStandaloneFeature,
+  ɵɵsetComponentScope,
+  ɵɵpureFunction0,
+  ɵɵpureFunction1,
   ɵɵtemplateRefExtractor,
   ɵsetClassDebugInfo,
   Directive,
@@ -26296,6 +26649,7 @@ export {
   LOCALE_ID,
   createPlatformFactory,
   ChangeDetectorRef,
+  IterableDiffers,
   platformCore,
   ApplicationModule,
   booleanAttribute,
@@ -26312,6 +26666,8 @@ export {
   HashLocationStrategy,
   Location,
   parseCookieValue,
+  NgClass,
+  NgForOf,
   NgIf,
   NgTemplateOutlet,
   CommonModule,
@@ -26328,6 +26684,8 @@ export {
   style,
   state,
   transition,
+  animateChild,
+  query,
   NoopAnimationPlayer,
   AnimationGroupPlayer,
   ɵPRE_STYLE
@@ -26407,4 +26765,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-ZYAIGNRL.js.map
+//# sourceMappingURL=chunk-YOJEZ4YA.js.map
