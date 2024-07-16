@@ -8,7 +8,7 @@
             <input [type]="passwordFieldType" id="password" placeholder="Password (min. 8 characters)" name="password" required formControlName="password"><br>
             <!-- <input type="checkbox" id="showPassword" (change)="togglePasswordVisibility()">Show Password<br>
             <div class="submit-button">Register</div> -->
-            <div class="submit-button" (click)="postToDB($event)">Submit</div>
+            <div matRipple class="submit-button" (click)="postToDB($event)">Submit</div>
         </form>
     </div>
     <h4>Have an account? <a routerLink="/login">Login</a></h4>

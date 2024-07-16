@@ -1,4 +1,7 @@
-<div class="lr-buttons-container">
-    <div routerLink="/login" class="lr-buttons">Login</div>
-    <div routerLink="/register" class="lr-buttons">Register</div>
+<div class="lr-buttons-container" *ngIf="!loggedIn">
+    <div matRipple routerLink="/login" class="lr-buttons">Login</div>
+    <div matRipple routerLink="/register" class="lr-buttons">Register</div>
+</div>
+<div class="lr-buttons-container" *ngIf="loggedIn">
+    <h2><span class="re-color">Squeak,</span> {{this.user}}!</h2>
 </div>

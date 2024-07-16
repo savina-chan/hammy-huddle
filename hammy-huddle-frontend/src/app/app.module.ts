@@ -18,7 +18,15 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle'
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatRippleModule} from '@angular/material/core';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -41,7 +49,14 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle'
     HttpClientModule,
     MatCardModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatToolbarModule,
+    MatChipsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatRippleModule,
+    MatPaginatorModule,
+    MatInputModule,
   ],
   providers: [
     provideAnimationsAsync()

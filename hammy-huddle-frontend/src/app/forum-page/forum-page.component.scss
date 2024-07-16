@@ -1,0 +1,80 @@
+.toolbar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+.chip-set {
+    display: flex;
+}
+
+.content {
+    margin-top: 2rem;
+}
+
+.post-container {
+    margin-bottom: 16px;
+}
+
+.post-card {
+    width: 100%;
+}
+
+.post-editor {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    .post-card {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    h2 {
+        color: var(--secondary-color);
+        font-family: Roboto;
+    }
+
+    form {
+        width: 100%;
+    }
+    
+    .full-width {
+        width: 100%;
+    }
+
+    .toolbar {
+         margin-top: 1rem;
+    }
+
+}
+
+.post-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.view-discussion-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 1;
+}
+
+@media screen and (max-width: 600px) {
+    .post-header {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .view-discussion-button {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-top: 8px;
+        margin-right: 0;
+    }
+}
+  
