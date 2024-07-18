@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 export interface Post {
   title: string;
   author: string;
   content: string;
   tags: string[];
-  images:[];
+  images: [];
   postId: string;
-  showFullContent: boolean; // Add this property
+  showFullContent: boolean;
 }
 
 @Component({
@@ -20,224 +21,63 @@ export interface Post {
 
 export class ForumPageComponent implements OnInit {
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
-  // samplePost: Post[] = [
-  //   {
-  //     title: "Adorable Hamster Habits",
-  //     author: "Jane Doe",
-  //     content: "Hamsters are small, nocturnal rodents that are loved by many as pets. They have a variety of adorable habits that make them a joy to watch. One of the most entertaining behaviors is when they stuff their cheeks with food, storing it for later. Additionally, hamsters love to run on their exercise wheels, often spending hours doing so. They are also known for their curious nature, exploring every nook and cranny of their habitat. If you’re considering getting a hamster, be prepared for endless entertainment and cuteness!",
-  //     tags: ["Cute Hammy", "Funny Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Setting Up the Perfect Hamster Habitat",
-  //     author: "John Smith",
-  //     content: "Creating a comfortable and stimulating environment for your hamster is crucial for its well-being. Start with a spacious cage, preferably with multiple levels. Provide bedding made from paper or aspen shavings. Add hiding spots, tunnels, and an exercise wheel. Make sure to include a water bottle and a food dish. Clean the habitat regularly to keep your hamster healthy and happy.",
-  //     tags: ["Setup Tour", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Understanding the Rainbow Bridge",
-  //     author: "Emily Johnson",
-  //     content: "The Rainbow Bridge is a concept that many pet owners find comfort in. It's said that when a pet passes away, they cross the Rainbow Bridge and wait for their owners in a peaceful, beautiful place. For hamster owners, losing a small pet can be just as heartbreaking as losing a larger one. Remembering the joy they brought and thinking of them at the Rainbow Bridge can help in the grieving process.",
-  //     tags: ["Rainbow Bridge", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Hamster Wheel Setup Tips",
-  //     author: "Mike Brown",
-  //     content: "One of the essential accessories for a hamster's habitat is an exercise wheel. Choose a wheel that is the right size for your hamster; it should be large enough so that the hamster's back does not arch while running. Silent wheels are preferable to avoid noise disturbance. Ensure the wheel is secure and does not have gaps where the hamster's feet could get caught.",
-  //     tags: ["Setup Tour", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Funny Hamster Moments",
-  //     author: "Sarah White",
-  //     content: "Hamsters can be surprisingly funny with their antics. From stuffing their cheeks to the brim with food to running in their wheels with wild abandon, these little creatures can provide endless entertainment. Share your funniest hamster moments and let's enjoy some laughs together!",
-  //     tags: ["Funny Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "The Cutest Hamster Breeds",
-  //     author: "Anna Green",
-  //     content: "There are many breeds of hamsters, each with its own unique charm. Syrian hamsters, with their large size and docile nature, are often considered the cutest. Dwarf hamsters, like Roborovski and Campbell’s, are tiny and full of energy. Share pictures of your adorable hamsters and let's discuss which breed is the cutest!",
-  //     tags: ["Cute Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Adorable Hamster Habits",
-  //     author: "Jane Doe",
-  //     content: "Hamsters are small, nocturnal rodents that are loved by many as pets. They have a variety of adorable habits that make them a joy to watch. One of the most entertaining behaviors is when they stuff their cheeks with food, storing it for later. Additionally, hamsters love to run on their exercise wheels, often spending hours doing so. They are also known for their curious nature, exploring every nook and cranny of their habitat. If you’re considering getting a hamster, be prepared for endless entertainment and cuteness!",
-  //     tags: ["Cute Hammy", "Funny Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Setting Up the Perfect Hamster Habitat",
-  //     author: "John Smith",
-  //     content: "Creating a comfortable and stimulating environment for your hamster is crucial for its well-being. Start with a spacious cage, preferably with multiple levels. Provide bedding made from paper or aspen shavings. Add hiding spots, tunnels, and an exercise wheel. Make sure to include a water bottle and a food dish. Clean the habitat regularly to keep your hamster healthy and happy.",
-  //     tags: ["Setup Tour", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Understanding the Rainbow Bridge",
-  //     author: "Emily Johnson",
-  //     content: "The Rainbow Bridge is a concept that many pet owners find comfort in. It's said that when a pet passes away, they cross the Rainbow Bridge and wait for their owners in a peaceful, beautiful place. For hamster owners, losing a small pet can be just as heartbreaking as losing a larger one. Remembering the joy they brought and thinking of them at the Rainbow Bridge can help in the grieving process.",
-  //     tags: ["Rainbow Bridge", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Hamster Wheel Setup Tips",
-  //     author: "Mike Brown",
-  //     content: "One of the essential accessories for a hamster's habitat is an exercise wheel. Choose a wheel that is the right size for your hamster; it should be large enough so that the hamster's back does not arch while running. Silent wheels are preferable to avoid noise disturbance. Ensure the wheel is secure and does not have gaps where the hamster's feet could get caught.",
-  //     tags: ["Setup Tour", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Funny Hamster Moments",
-  //     author: "Sarah White",
-  //     content: "Hamsters can be surprisingly funny with their antics. From stuffing their cheeks to the brim with food to running in their wheels with wild abandon, these little creatures can provide endless entertainment. Share your funniest hamster moments and let's enjoy some laughs together!",
-  //     tags: ["Funny Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "The Cutest Hamster Breeds",
-  //     author: "Anna Green",
-  //     content: "There are many breeds of hamsters, each with its own unique charm. Syrian hamsters, with their large size and docile nature, are often considered the cutest. Dwarf hamsters, like Roborovski and Campbell’s, are tiny and full of energy. Share pictures of your adorable hamsters and let's discuss which breed is the cutest!",
-  //     tags: ["Cute Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Adorable Hamster Habits",
-  //     author: "Jane Doe",
-  //     content: "Hamsters are small, nocturnal rodents that are loved by many as pets. They have a variety of adorable habits that make them a joy to watch. One of the most entertaining behaviors is when they stuff their cheeks with food, storing it for later. Additionally, hamsters love to run on their exercise wheels, often spending hours doing so. They are also known for their curious nature, exploring every nook and cranny of their habitat. If you’re considering getting a hamster, be prepared for endless entertainment and cuteness!",
-  //     tags: ["Cute Hammy", "Funny Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Setting Up the Perfect Hamster Habitat",
-  //     author: "John Smith",
-  //     content: "Creating a comfortable and stimulating environment for your hamster is crucial for its well-being. Start with a spacious cage, preferably with multiple levels. Provide bedding made from paper or aspen shavings. Add hiding spots, tunnels, and an exercise wheel. Make sure to include a water bottle and a food dish. Clean the habitat regularly to keep your hamster healthy and happy.",
-  //     tags: ["Setup Tour", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Understanding the Rainbow Bridge",
-  //     author: "Emily Johnson",
-  //     content: "The Rainbow Bridge is a concept that many pet owners find comfort in. It's said that when a pet passes away, they cross the Rainbow Bridge and wait for their owners in a peaceful, beautiful place. For hamster owners, losing a small pet can be just as heartbreaking as losing a larger one. Remembering the joy they brought and thinking of them at the Rainbow Bridge can help in the grieving process.",
-  //     tags: ["Rainbow Bridge", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Hamster Wheel Setup Tips",
-  //     author: "Mike Brown",
-  //     content: "One of the essential accessories for a hamster's habitat is an exercise wheel. Choose a wheel that is the right size for your hamster; it should be large enough so that the hamster's back does not arch while running. Silent wheels are preferable to avoid noise disturbance. Ensure the wheel is secure and does not have gaps where the hamster's feet could get caught.",
-  //     tags: ["Setup Tour", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Funny Hamster Moments",
-  //     author: "Sarah White",
-  //     content: "Hamsters can be surprisingly funny with their antics. From stuffing their cheeks to the brim with food to running in their wheels with wild abandon, these little creatures can provide endless entertainment. Share your funniest hamster moments and let's enjoy some laughs together!",
-  //     tags: ["Funny Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "The Cutest Hamster Breeds",
-  //     author: "Anna Green",
-  //     content: "There are many breeds of hamsters, each with its own unique charm. Syrian hamsters, with their large size and docile nature, are often considered the cutest. Dwarf hamsters, like Roborovski and Campbell’s, are tiny and full of energy. Share pictures of your adorable hamsters and let's discuss which breed is the cutest!",
-  //     tags: ["Cute Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Adorable Hamster Habits",
-  //     author: "Jane Doe",
-  //     content: "Hamsters are small, nocturnal rodents that are loved by many as pets. They have a variety of adorable habits that make them a joy to watch. One of the most entertaining behaviors is when they stuff their cheeks with food, storing it for later. Additionally, hamsters love to run on their exercise wheels, often spending hours doing so. They are also known for their curious nature, exploring every nook and cranny of their habitat. If you’re considering getting a hamster, be prepared for endless entertainment and cuteness!",
-  //     tags: ["Cute Hammy", "Funny Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Setting Up the Perfect Hamster Habitat",
-  //     author: "John Smith",
-  //     content: "Creating a comfortable and stimulating environment for your hamster is crucial for its well-being. Start with a spacious cage, preferably with multiple levels. Provide bedding made from paper or aspen shavings. Add hiding spots, tunnels, and an exercise wheel. Make sure to include a water bottle and a food dish. Clean the habitat regularly to keep your hamster healthy and happy.",
-  //     tags: ["Setup Tour", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Understanding the Rainbow Bridge",
-  //     author: "Emily Johnson",
-  //     content: "The Rainbow Bridge is a concept that many pet owners find comfort in. It's said that when a pet passes away, they cross the Rainbow Bridge and wait for their owners in a peaceful, beautiful place. For hamster owners, losing a small pet can be just as heartbreaking as losing a larger one. Remembering the joy they brought and thinking of them at the Rainbow Bridge can help in the grieving process.",
-  //     tags: ["Rainbow Bridge", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Hamster Wheel Setup Tips",
-  //     author: "Mike Brown",
-  //     content: "One of the essential accessories for a hamster's habitat is an exercise wheel. Choose a wheel that is the right size for your hamster; it should be large enough so that the hamster's back does not arch while running. Silent wheels are preferable to avoid noise disturbance. Ensure the wheel is secure and does not have gaps where the hamster's feet could get caught.",
-  //     tags: ["Setup Tour", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "Funny Hamster Moments",
-  //     author: "Sarah White",
-  //     content: "Hamsters can be surprisingly funny with their antics. From stuffing their cheeks to the brim with food to running in their wheels with wild abandon, these little creatures can provide endless entertainment. Share your funniest hamster moments and let's enjoy some laughs together!",
-  //     tags: ["Funny Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   },
-  //   {
-  //     title: "The Cutest Hamster Breeds",
-  //     author: "Anna Green",
-  //     content: "There are many breeds of hamsters, each with its own unique charm. Syrian hamsters, with their large size and docile nature, are often considered the cutest. Dwarf hamsters, like Roborovski and Campbell’s, are tiny and full of energy. Share pictures of your adorable hamsters and let's discuss which breed is the cutest!",
-  //     tags: ["Cute Hammy", "Discussions"],
-  //     images: [],
-  //     showFullContent: false
-  //   }];
+  displayTags: Array<string> = ["Rainbow Bridge", "Setup Tour", "Discussions", "Funny Hammy", "Cute Hammy"];
+
   posts: Post[] = [];
+  filteredPosts: Post[] = [];
   paginatedPosts: Post[] = [];
   pageSize: number = 5;
   currentPage: number = 0;
+  filters: string[] = [];
 
-  editting:boolean = false;
+  editing: boolean = false;
 
   // Form Data
   title: string = ""
-  content:string = ""
-  tags:string[] = [];
-  images:[] = []; // ?
+  content: string = ""
+  tags: string[] = [];
+  images: [] = []; // ?
 
-  toggleEditting(): void {
-    this.editting = !this.editting
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
+
+  ngOnInit(): void {
+    this.getPosts();
+  }
+
+  toggleEditing(): void {
+    this.editing = !this.editing
+  }
+
+  filterSet(tag: string) {
+    const index = this.filters.indexOf(tag);
+    if (index === -1) {
+      this.filters.push(tag);
+    } else {
+      this.filters.splice(index, 1);
+    }
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    if (this.filters.length === 0) {
+      this.filteredPosts = this.posts;
+    } else {
+      this.filteredPosts = this.posts.filter(post =>
+        post.tags.some(tag => this.filters.includes(tag))
+      );
+    }
+    this.updatePaginatedPosts();
   }
 
   tagSet(tag: string) {
     const index = this.tags.indexOf(tag);
-    if(index == -1){
+    if (index === -1) {
       this.tags.push(tag);
     } else {
-      this.tags.splice(index, 1)
+      this.tags.splice(index, 1);
     }
   }
 
@@ -250,38 +90,40 @@ export class ForumPageComponent implements OnInit {
       images: this.images
     }
 
-
     this.apiService.sendForumPost(payload)
-      .subscribe((response: any) => {  
-          null;
+      .subscribe((response: any) => {
+        null;
       }, (error: any) => {
         console.error('Error:', error);
       });
 
-      this.clearForm();
-      this.toggleEditting();
+    this.clearForm();
+    this.toggleEditing();
+    this.getPosts();
   }
 
   parsePostData(response: Post[]) {
-    for(let i of response){
+    this.posts = [];
+    for (let i of response) {
       const post: Post = {
         title: i.title,
         author: i.author,
         content: i.content,
         tags: i.tags,
-        images:i.images,
+        images: i.images,
         postId: i.postId,
         showFullContent: false
       };
       this.posts.unshift(post);
     }
+    this.filteredPosts = this.posts;
     this.updatePaginatedPosts();
   }
 
   getPosts() {
     this.apiService.getForumPost()
-      .subscribe((response: any) => {  
-        if(response && Array.isArray(response)){
+      .subscribe((response: any) => {
+        if (response && Array.isArray(response)) {
           this.parsePostData(response);
         }
       }, (error: any) => {
@@ -296,17 +138,10 @@ export class ForumPageComponent implements OnInit {
     this.images = [];
   }
 
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-
-  ngOnInit(): void {
-    this.getPosts();
-  }
-
   updatePaginatedPosts(): void {
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.paginatedPosts = this.posts.slice(startIndex, endIndex);
+    this.paginatedPosts = this.filteredPosts.slice(startIndex, endIndex);
   }
 
   handlePageEvent(event: PageEvent): void {
@@ -317,5 +152,9 @@ export class ForumPageComponent implements OnInit {
 
   toggleContent(post: Post) {
     post.showFullContent = !post.showFullContent;
+  }
+
+  navToPost(id: string) {
+    this.router.navigate(["/post",id])
   }
 }

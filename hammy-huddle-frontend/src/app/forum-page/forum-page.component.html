@@ -3,19 +3,15 @@
     <div>
         <h1>The Hamster Huddle Forum</h1>
         <mat-chip-listbox class="chip-set" multiple>
-            <mat-chip-option>Rainbow Bridge</mat-chip-option>
-            <mat-chip-option>Setup Tour</mat-chip-option>
-            <mat-chip-option>Discussions</mat-chip-option>
-            <mat-chip-option>Funny Hammy</mat-chip-option>
-            <mat-chip-option>Cute Hammy</mat-chip-option>
+            <mat-chip-option *ngFor="let tag of displayTags" (click) = "filterSet(tag)">{{tag}}</mat-chip-option>
         </mat-chip-listbox>
     </div>
-    <button mat-icon-button (click)="toggleEditting()">
+    <button mat-icon-button (click)="toggleEditing()">
         <mat-icon>add</mat-icon>
     </button>
 </mat-toolbar-row>
 <div class = "content">
-    <div *ngIf="editting" class="post-editor">
+    <div *ngIf="editing" class="post-editor">
         <mat-card class = "post-card">
             <h2>Create a Post</h2>
             <form>
@@ -27,11 +23,7 @@
                   <textarea matInput placeholder="Content" name="content" [(ngModel)]="this.content"></textarea>
                 </mat-form-field>
                 <mat-chip-listbox class="chip-set" multiple>
-                    <mat-chip-option (click) = "tagSet('Rainbow Bridge')">Rainbow Bridge</mat-chip-option>
-                    <mat-chip-option (click) = "tagSet('Setup Tour')">Setup Tour</mat-chip-option>
-                    <mat-chip-option (click) = "tagSet('Discussions')">Discussions</mat-chip-option>
-                    <mat-chip-option (click) = "tagSet('Funny Hammy')">Funny Hammy</mat-chip-option>
-                    <mat-chip-option (click) = "tagSet('Cute Hammy')">Cute Hammy</mat-chip-option>
+                    <mat-chip-option  *ngFor="let tag of displayTags" (click) = "tagSet(tag)">{{tag}}</mat-chip-option>
                 </mat-chip-listbox>
                 <div class="toolbar">
                     <mat-toolbar-row>
@@ -39,7 +31,7 @@
                             <mat-icon>post_add</mat-icon>
                             Post
                         </button>
-                        <button mat-button extended color="primary" (click)="toggleEditting()">
+                        <button mat-button extended color="primary" (click)="toggleEditing()">
                             <mat-icon>cancel</mat-icon>
                             Cancel
                         </button>
@@ -56,7 +48,7 @@
               <mat-card-title>{{ post.title }}</mat-card-title>
               <mat-card-subtitle>by {{ post.author }}</mat-card-subtitle>
             </mat-card-header>
-            <button mat-icon-button class="view-discussion-button" [routerLink]="['/post', post.title]">
+            <button mat-icon-button class="view-discussion-button" [routerLink]="['/post', post.postId]">
                 <mat-icon>open_in_new</mat-icon>
             </button>
           </div>

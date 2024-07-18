@@ -27,6 +27,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     ProfilePageComponent,
     HeaderComponent,
     LoginRegisterButtonsComponent,
-    NavButtonsComponent
+    NavButtonsComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,

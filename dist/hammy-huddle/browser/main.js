@@ -36418,174 +36418,199 @@ var MatInputModule = _MatInputModule;
 // src/app/forum-page/forum-page.component.ts
 var _c011 = () => [5, 10, 20];
 var _c19 = (a0) => ["/post", a0];
-function ForumPageComponent_div_20_Template(rf, ctx) {
+function ForumPageComponent_mat_chip_option_6_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 7)(1, "mat-card", 8)(2, "h2");
+    \u0275\u0275elementStart(0, "mat-chip-option", 8);
+    \u0275\u0275listener("click", function ForumPageComponent_mat_chip_option_6_Template_mat_chip_option_click_0_listener() {
+      const tag_r2 = \u0275\u0275restoreView(_r1).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.filterSet(tag_r2));
+    });
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const tag_r2 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(tag_r2);
+  }
+}
+function ForumPageComponent_div_11_mat_chip_option_11_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "mat-chip-option", 8);
+    \u0275\u0275listener("click", function ForumPageComponent_div_11_mat_chip_option_11_Template_mat_chip_option_click_0_listener() {
+      const tag_r6 = \u0275\u0275restoreView(_r5).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.tagSet(tag_r6));
+    });
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const tag_r6 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(tag_r6);
+  }
+}
+function ForumPageComponent_div_11_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 9)(1, "mat-card", 10)(2, "h2");
     \u0275\u0275text(3, "Create a Post");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "form")(5, "mat-form-field", 9)(6, "input", 10);
-    \u0275\u0275twoWayListener("ngModelChange", function ForumPageComponent_div_20_Template_input_ngModelChange_6_listener($event) {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      \u0275\u0275twoWayBindingSet(ctx_r1.title, $event) || (ctx_r1.title = $event);
+    \u0275\u0275elementStart(4, "form")(5, "mat-form-field", 11)(6, "input", 12);
+    \u0275\u0275twoWayListener("ngModelChange", function ForumPageComponent_div_11_Template_input_ngModelChange_6_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      \u0275\u0275twoWayBindingSet(ctx_r2.title, $event) || (ctx_r2.title = $event);
       return \u0275\u0275resetView($event);
     });
     \u0275\u0275elementEnd()();
     \u0275\u0275element(7, "br");
-    \u0275\u0275elementStart(8, "mat-form-field", 9)(9, "textarea", 11);
-    \u0275\u0275twoWayListener("ngModelChange", function ForumPageComponent_div_20_Template_textarea_ngModelChange_9_listener($event) {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      \u0275\u0275twoWayBindingSet(ctx_r1.content, $event) || (ctx_r1.content = $event);
+    \u0275\u0275elementStart(8, "mat-form-field", 11)(9, "textarea", 13);
+    \u0275\u0275twoWayListener("ngModelChange", function ForumPageComponent_div_11_Template_textarea_ngModelChange_9_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      \u0275\u0275twoWayBindingSet(ctx_r2.content, $event) || (ctx_r2.content = $event);
       return \u0275\u0275resetView($event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(10, "mat-chip-listbox", 1)(11, "mat-chip-option", 12);
-    \u0275\u0275listener("click", function ForumPageComponent_div_20_Template_mat_chip_option_click_11_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.tagSet("Rainbow Bridge"));
-    });
-    \u0275\u0275text(12, "Rainbow Bridge");
+    \u0275\u0275elementStart(10, "mat-chip-listbox", 1);
+    \u0275\u0275template(11, ForumPageComponent_div_11_mat_chip_option_11_Template, 2, 1, "mat-chip-option", 2);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(13, "mat-chip-option", 12);
-    \u0275\u0275listener("click", function ForumPageComponent_div_20_Template_mat_chip_option_click_13_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.tagSet("Setup Tour"));
+    \u0275\u0275elementStart(12, "div", 14)(13, "mat-toolbar-row")(14, "button", 15);
+    \u0275\u0275listener("click", function ForumPageComponent_div_11_Template_button_click_14_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.sendPost());
     });
-    \u0275\u0275text(14, "Setup Tour");
+    \u0275\u0275elementStart(15, "mat-icon");
+    \u0275\u0275text(16, "post_add");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(15, "mat-chip-option", 12);
-    \u0275\u0275listener("click", function ForumPageComponent_div_20_Template_mat_chip_option_click_15_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.tagSet("Discussions"));
+    \u0275\u0275text(17, " Post ");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(18, "button", 16);
+    \u0275\u0275listener("click", function ForumPageComponent_div_11_Template_button_click_18_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.toggleEditing());
     });
-    \u0275\u0275text(16, "Discussions");
+    \u0275\u0275elementStart(19, "mat-icon");
+    \u0275\u0275text(20, "cancel");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(17, "mat-chip-option", 12);
-    \u0275\u0275listener("click", function ForumPageComponent_div_20_Template_mat_chip_option_click_17_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.tagSet("Funny Hammy"));
-    });
-    \u0275\u0275text(18, "Funny Hammy");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(19, "mat-chip-option", 12);
-    \u0275\u0275listener("click", function ForumPageComponent_div_20_Template_mat_chip_option_click_19_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.tagSet("Cute Hammy"));
-    });
-    \u0275\u0275text(20, "Cute Hammy");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(21, "div", 13)(22, "mat-toolbar-row")(23, "button", 14);
-    \u0275\u0275listener("click", function ForumPageComponent_div_20_Template_button_click_23_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.sendPost());
-    });
-    \u0275\u0275elementStart(24, "mat-icon");
-    \u0275\u0275text(25, "post_add");
-    \u0275\u0275elementEnd();
-    \u0275\u0275text(26, " Post ");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(27, "button", 15);
-    \u0275\u0275listener("click", function ForumPageComponent_div_20_Template_button_click_27_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.toggleEditting());
-    });
-    \u0275\u0275elementStart(28, "mat-icon");
-    \u0275\u0275text(29, "cancel");
-    \u0275\u0275elementEnd();
-    \u0275\u0275text(30, " Cancel ");
+    \u0275\u0275text(21, " Cancel ");
     \u0275\u0275elementEnd()()()()()();
   }
   if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
+    const ctx_r2 = \u0275\u0275nextContext();
     \u0275\u0275advance(6);
-    \u0275\u0275twoWayProperty("ngModel", ctx_r1.title);
+    \u0275\u0275twoWayProperty("ngModel", ctx_r2.title);
     \u0275\u0275advance(3);
-    \u0275\u0275twoWayProperty("ngModel", ctx_r1.content);
+    \u0275\u0275twoWayProperty("ngModel", ctx_r2.content);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngForOf", ctx_r2.displayTags);
   }
 }
-function ForumPageComponent_div_21_mat_chip_15_Template(rf, ctx) {
+function ForumPageComponent_div_12_mat_chip_15_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-chip");
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const tag_r4 = ctx.$implicit;
+    const tag_r8 = ctx.$implicit;
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(tag_r4);
+    \u0275\u0275textInterpolate(tag_r8);
   }
 }
-function ForumPageComponent_div_21_Template(rf, ctx) {
+function ForumPageComponent_div_12_Template(rf, ctx) {
   if (rf & 1) {
-    const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 16)(1, "mat-card", 8)(2, "div", 17)(3, "mat-card-header")(4, "mat-card-title");
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 17)(1, "mat-card", 10)(2, "div", 18)(3, "mat-card-header")(4, "mat-card-title");
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(6, "mat-card-subtitle");
     \u0275\u0275text(7);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "button", 18)(9, "mat-icon");
+    \u0275\u0275elementStart(8, "button", 19)(9, "mat-icon");
     \u0275\u0275text(10, "open_in_new");
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(11, "mat-card-content")(12, "p");
     \u0275\u0275text(13);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(14, "mat-chip-listbox");
-    \u0275\u0275template(15, ForumPageComponent_div_21_mat_chip_15_Template, 2, 1, "mat-chip", 19);
+    \u0275\u0275template(15, ForumPageComponent_div_12_mat_chip_15_Template, 2, 1, "mat-chip", 20);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(16, "mat-card-actions")(17, "button", 20);
-    \u0275\u0275listener("click", function ForumPageComponent_div_21_Template_button_click_17_listener() {
-      const post_r5 = \u0275\u0275restoreView(_r3).$implicit;
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.toggleContent(post_r5));
+    \u0275\u0275elementStart(16, "mat-card-actions")(17, "button", 21);
+    \u0275\u0275listener("click", function ForumPageComponent_div_12_Template_button_click_17_listener() {
+      const post_r9 = \u0275\u0275restoreView(_r7).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.toggleContent(post_r9));
     });
     \u0275\u0275text(18);
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
-    const post_r5 = ctx.$implicit;
+    const post_r9 = ctx.$implicit;
     \u0275\u0275advance(5);
-    \u0275\u0275textInterpolate(post_r5.title);
+    \u0275\u0275textInterpolate(post_r9.title);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1("by ", post_r5.author, "");
+    \u0275\u0275textInterpolate1("by ", post_r9.author, "");
     \u0275\u0275advance();
-    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(6, _c19, post_r5.title));
+    \u0275\u0275property("routerLink", \u0275\u0275pureFunction1(6, _c19, post_r9.postId));
     \u0275\u0275advance(5);
-    \u0275\u0275textInterpolate(post_r5.showFullContent ? post_r5.content : "");
+    \u0275\u0275textInterpolate(post_r9.showFullContent ? post_r9.content : "");
     \u0275\u0275advance(2);
-    \u0275\u0275property("ngForOf", post_r5.tags);
+    \u0275\u0275property("ngForOf", post_r9.tags);
     \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1(" ", post_r5.showFullContent ? "Read Less" : "Read More", " ");
+    \u0275\u0275textInterpolate1(" ", post_r9.showFullContent ? "Read Less" : "Read More", " ");
   }
 }
 var _ForumPageComponent = class _ForumPageComponent {
-  constructor(apiService) {
+  constructor(apiService, router) {
     this.apiService = apiService;
+    this.router = router;
+    this.displayTags = ["Rainbow Bridge", "Setup Tour", "Discussions", "Funny Hammy", "Cute Hammy"];
     this.posts = [];
+    this.filteredPosts = [];
     this.paginatedPosts = [];
     this.pageSize = 5;
     this.currentPage = 0;
-    this.editting = false;
+    this.filters = [];
+    this.editing = false;
     this.title = "";
     this.content = "";
     this.tags = [];
     this.images = [];
   }
-  toggleEditting() {
-    this.editting = !this.editting;
+  ngOnInit() {
+    this.getPosts();
+  }
+  toggleEditing() {
+    this.editing = !this.editing;
+  }
+  filterSet(tag) {
+    const index = this.filters.indexOf(tag);
+    if (index === -1) {
+      this.filters.push(tag);
+    } else {
+      this.filters.splice(index, 1);
+    }
+    this.applyFilters();
+  }
+  applyFilters() {
+    if (this.filters.length === 0) {
+      this.filteredPosts = this.posts;
+    } else {
+      this.filteredPosts = this.posts.filter((post) => post.tags.some((tag) => this.filters.includes(tag)));
+    }
+    this.updatePaginatedPosts();
   }
   tagSet(tag) {
     const index = this.tags.indexOf(tag);
-    if (index == -1) {
+    if (index === -1) {
       this.tags.push(tag);
     } else {
       this.tags.splice(index, 1);
@@ -36605,9 +36630,11 @@ var _ForumPageComponent = class _ForumPageComponent {
       console.error("Error:", error);
     });
     this.clearForm();
-    this.toggleEditting();
+    this.toggleEditing();
+    this.getPosts();
   }
   parsePostData(response) {
+    this.posts = [];
     for (let i of response) {
       const post = {
         title: i.title,
@@ -36620,6 +36647,7 @@ var _ForumPageComponent = class _ForumPageComponent {
       };
       this.posts.unshift(post);
     }
+    this.filteredPosts = this.posts;
     this.updatePaginatedPosts();
   }
   getPosts() {
@@ -36637,13 +36665,10 @@ var _ForumPageComponent = class _ForumPageComponent {
     this.tags = [];
     this.images = [];
   }
-  ngOnInit() {
-    this.getPosts();
-  }
   updatePaginatedPosts() {
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.paginatedPosts = this.posts.slice(startIndex, endIndex);
+    this.paginatedPosts = this.filteredPosts.slice(startIndex, endIndex);
   }
   handlePageEvent(event) {
     this.pageSize = event.pageSize;
@@ -36653,9 +36678,12 @@ var _ForumPageComponent = class _ForumPageComponent {
   toggleContent(post) {
     post.showFullContent = !post.showFullContent;
   }
+  navToPost(id) {
+    this.router.navigate(["/post", id]);
+  }
 };
 _ForumPageComponent.\u0275fac = function ForumPageComponent_Factory(t) {
-  return new (t || _ForumPageComponent)(\u0275\u0275directiveInject(ApiService));
+  return new (t || _ForumPageComponent)(\u0275\u0275directiveInject(ApiService), \u0275\u0275directiveInject(Router));
 };
 _ForumPageComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ForumPageComponent, selectors: [["app-forum-page"]], viewQuery: function ForumPageComponent_Query(rf, ctx) {
   if (rf & 1) {
@@ -36665,54 +36693,62 @@ _ForumPageComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ ty
     let _t;
     \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.paginator = _t.first);
   }
-}, decls: 23, vars: 6, consts: [[1, "toolbar-row"], ["multiple", "", 1, "chip-set"], ["mat-icon-button", "", 3, "click"], [1, "content"], ["class", "post-editor", 4, "ngIf"], ["class", "post-container", 4, "ngFor", "ngForOf"], [3, "page", "length", "pageSize", "pageSizeOptions"], [1, "post-editor"], [1, "post-card"], [1, "full-width"], ["matInput", "", "placeholder", "Title", "name", "title", 3, "ngModelChange", "ngModel"], ["matInput", "", "placeholder", "Content", "name", "content", 3, "ngModelChange", "ngModel"], [3, "click"], [1, "toolbar"], ["mat-button", "", "extended", "", "type", "submit", "color", "primary", 3, "click"], ["mat-button", "", "extended", "", "color", "primary", 3, "click"], [1, "post-container"], [1, "post-header"], ["mat-icon-button", "", 1, "view-discussion-button", 3, "routerLink"], [4, "ngFor", "ngForOf"], ["mat-button", "", 3, "click"]], template: function ForumPageComponent_Template(rf, ctx) {
+}, decls: 14, vars: 7, consts: [[1, "toolbar-row"], ["multiple", "", 1, "chip-set"], [3, "click", 4, "ngFor", "ngForOf"], ["mat-icon-button", "", 3, "click"], [1, "content"], ["class", "post-editor", 4, "ngIf"], ["class", "post-container", 4, "ngFor", "ngForOf"], [3, "page", "length", "pageSize", "pageSizeOptions"], [3, "click"], [1, "post-editor"], [1, "post-card"], [1, "full-width"], ["matInput", "", "placeholder", "Title", "name", "title", 3, "ngModelChange", "ngModel"], ["matInput", "", "placeholder", "Content", "name", "content", 3, "ngModelChange", "ngModel"], [1, "toolbar"], ["mat-button", "", "extended", "", "type", "submit", "color", "primary", 3, "click"], ["mat-button", "", "extended", "", "color", "primary", 3, "click"], [1, "post-container"], [1, "post-header"], ["mat-icon-button", "", 1, "view-discussion-button", 3, "routerLink"], [4, "ngFor", "ngForOf"], ["mat-button", "", 3, "click"]], template: function ForumPageComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "app-header");
     \u0275\u0275elementStart(1, "mat-toolbar-row", 0)(2, "div")(3, "h1");
     \u0275\u0275text(4, "The Hamster Huddle Forum");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "mat-chip-listbox", 1)(6, "mat-chip-option");
-    \u0275\u0275text(7, "Rainbow Bridge");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "mat-chip-option");
-    \u0275\u0275text(9, "Setup Tour");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(10, "mat-chip-option");
-    \u0275\u0275text(11, "Discussions");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(12, "mat-chip-option");
-    \u0275\u0275text(13, "Funny Hammy");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(14, "mat-chip-option");
-    \u0275\u0275text(15, "Cute Hammy");
-    \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(16, "button", 2);
-    \u0275\u0275listener("click", function ForumPageComponent_Template_button_click_16_listener() {
-      return ctx.toggleEditting();
+    \u0275\u0275elementStart(5, "mat-chip-listbox", 1);
+    \u0275\u0275template(6, ForumPageComponent_mat_chip_option_6_Template, 2, 1, "mat-chip-option", 2);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(7, "button", 3);
+    \u0275\u0275listener("click", function ForumPageComponent_Template_button_click_7_listener() {
+      return ctx.toggleEditing();
     });
-    \u0275\u0275elementStart(17, "mat-icon");
-    \u0275\u0275text(18, "add");
+    \u0275\u0275elementStart(8, "mat-icon");
+    \u0275\u0275text(9, "add");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(19, "div", 3);
-    \u0275\u0275template(20, ForumPageComponent_div_20_Template, 31, 2, "div", 4)(21, ForumPageComponent_div_21_Template, 19, 8, "div", 5);
-    \u0275\u0275elementStart(22, "mat-paginator", 6);
-    \u0275\u0275listener("page", function ForumPageComponent_Template_mat_paginator_page_22_listener($event) {
+    \u0275\u0275elementStart(10, "div", 4);
+    \u0275\u0275template(11, ForumPageComponent_div_11_Template, 22, 3, "div", 5)(12, ForumPageComponent_div_12_Template, 19, 8, "div", 6);
+    \u0275\u0275elementStart(13, "mat-paginator", 7);
+    \u0275\u0275listener("page", function ForumPageComponent_Template_mat_paginator_page_13_listener($event) {
       return ctx.handlePageEvent($event);
     });
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    \u0275\u0275advance(20);
-    \u0275\u0275property("ngIf", ctx.editting);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("ngForOf", ctx.displayTags);
+    \u0275\u0275advance(5);
+    \u0275\u0275property("ngIf", ctx.editing);
     \u0275\u0275advance();
     \u0275\u0275property("ngForOf", ctx.paginatedPosts);
     \u0275\u0275advance();
-    \u0275\u0275property("length", ctx.posts.length)("pageSize", ctx.pageSize)("pageSizeOptions", \u0275\u0275pureFunction0(5, _c011));
+    \u0275\u0275property("length", ctx.posts.length)("pageSize", ctx.pageSize)("pageSizeOptions", \u0275\u0275pureFunction0(6, _c011));
   }
 }, dependencies: [NgForOf, NgIf, RouterLink, \u0275NgNoValidate, DefaultValueAccessor, NgControlStatus, NgControlStatusGroup, NgModel, NgForm, MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle, MatToolbarRow, MatChip, MatChipListbox, MatChipOption, MatButton, MatIconButton, MatIcon, MatPaginator, MatInput, MatFormField, HeaderComponent], styles: ['\n\n.toolbar-row[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  margin-top: 2rem;\n}\n.chip-set[_ngcontent-%COMP%] {\n  display: flex;\n}\n.content[_ngcontent-%COMP%] {\n  margin-top: 2rem;\n}\n.post-container[_ngcontent-%COMP%] {\n  margin-bottom: 16px;\n  font-family: "Jua";\n}\n.post-card[_ngcontent-%COMP%] {\n  width: 100%;\n}\n.post-editor[_ngcontent-%COMP%] {\n  margin-top: 1rem;\n  margin-bottom: 2rem;\n}\n.post-editor[_ngcontent-%COMP%]   .post-card[_ngcontent-%COMP%] {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  padding-bottom: 1rem;\n}\n.post-editor[_ngcontent-%COMP%]   h2[_ngcontent-%COMP%] {\n  color: var(--secondary-color);\n  font-family: Roboto;\n}\n.post-editor[_ngcontent-%COMP%]   form[_ngcontent-%COMP%] {\n  width: 100%;\n}\n.post-editor[_ngcontent-%COMP%]   .full-width[_ngcontent-%COMP%] {\n  width: 100%;\n}\n.post-editor[_ngcontent-%COMP%]   .toolbar[_ngcontent-%COMP%] {\n  margin-top: 1rem;\n}\n.post-header[_ngcontent-%COMP%] {\n  position: relative;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.view-discussion-button[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  z-index: 1;\n}\n@media screen and (max-width: 600px) {\n  .post-header[_ngcontent-%COMP%] {\n    flex-direction: row;\n    align-items: flex-start;\n  }\n  .view-discussion-button[_ngcontent-%COMP%] {\n    position: relative;\n    top: auto;\n    right: auto;\n    margin-top: 8px;\n    margin-right: 0;\n  }\n}\n/*# sourceMappingURL=forum-page.component.css.map */'] });
 var ForumPageComponent = _ForumPageComponent;
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ForumPageComponent, { className: "ForumPageComponent" });
+})();
+
+// src/app/post-details/post-details.component.ts
+var _PostDetailsComponent = class _PostDetailsComponent {
+};
+_PostDetailsComponent.\u0275fac = function PostDetailsComponent_Factory(t) {
+  return new (t || _PostDetailsComponent)();
+};
+_PostDetailsComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PostDetailsComponent, selectors: [["app-post-details"]], decls: 2, vars: 0, template: function PostDetailsComponent_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p");
+    \u0275\u0275text(1, "post-details works!");
+    \u0275\u0275elementEnd();
+  }
+} });
+var PostDetailsComponent = _PostDetailsComponent;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PostDetailsComponent, { className: "PostDetailsComponent" });
 })();
 
 // src/app/app-routing.module.ts
@@ -36722,7 +36758,8 @@ var routes = [
   { path: "register", component: RegisterPageComponent },
   { path: "profile", component: ProfilePageComponent },
   { path: "guide", component: GuidePageComponent },
-  { path: "forum", component: ForumPageComponent }
+  { path: "forum", component: ForumPageComponent },
+  { path: "post/:id", component: PostDetailsComponent }
 ];
 var _AppRoutingModule = class _AppRoutingModule {
 };

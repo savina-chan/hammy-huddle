@@ -6,6 +6,7 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { GuidePageComponent } from './guide-page/guide-page.component';
 import { ForumPageComponent } from './forum-page/forum-page.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 const routes: Routes = [
   {path:"", component:HomePageComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path:"register", component:RegisterPageComponent},
   {path:"profile", component:ProfilePageComponent},
   {path:"guide", component:GuidePageComponent},
-  {path:"forum", component:ForumPageComponent}
+  {path:"forum", component:ForumPageComponent},
+  {path:"post/:id", component:PostDetailsComponent}
 ];
 
 @NgModule({
