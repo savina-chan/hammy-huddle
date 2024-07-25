@@ -1,0 +1,50 @@
+.main-content {
+    margin-top: 2rem;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.editor {
+    margin-bottom: 2rem;
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.full-width {
+    flex: 1;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+button {
+    margin-bottom: 2rem;
+}
+
+.comments-section {
+    margin-top: 2rem;
+}
+
+.replies {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}
+
+/* Responsive styles for screens with a max width of 480px (e.g., mobile phones) */
+@media (max-width: 480px) {
+    .main-content {
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+}

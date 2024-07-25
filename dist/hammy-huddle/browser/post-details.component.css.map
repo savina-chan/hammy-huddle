@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/post-details/post-details.component.scss"],
+  "sourcesContent": [".main-content {\n    margin-top: 2rem;\n    margin-left: 25%;\n    margin-right: 25%;\n}\n\n.editor {\n    margin-bottom: 2rem;\n}\n\n.form-inline {\n    display: flex;\n    align-items: center;\n    gap: 1rem;\n}\n\n.full-width {\n    flex: 1;\n}\n\nmat-form-field {\n    width: 100%;\n}\n\nbutton {\n    margin-bottom: 2rem;\n}\n\n.comments-section {\n    margin-top: 2rem;\n}\n\n.replies {\n    margin-bottom: 1rem;\n}\n\n@media (max-width: 768px) {\n    .main-content {\n        margin-left: 10%;\n        margin-right: 10%;\n    }\n}\n\n/* Responsive styles for screens with a max width of 480px (e.g., mobile phones) */\n@media (max-width: 480px) {\n    .main-content {\n        margin-left: 2%;\n        margin-right: 2%;\n    }\n}\n"],
+  "mappings": ";AAAA,CAAA;AACI,cAAA;AACA,eAAA;AACA,gBAAA;;AAGJ,CAAA;AACI,iBAAA;;AAGJ,CAAA;AACI,WAAA;AACA,eAAA;AACA,OAAA;;AAGJ,CAAA;AACI,QAAA;;AAGJ;AACI,SAAA;;AAGJ;AACI,iBAAA;;AAGJ,CAAA;AACI,cAAA;;AAGJ,CAAA;AACI,iBAAA;;AAGJ,OAAA,CAAA,SAAA,EAAA;AACI,GArCJ;AAsCQ,iBAAA;AACA,kBAAA;;;AAKR,OAAA,CAAA,SAAA,EAAA;AACI,GA7CJ;AA8CQ,iBAAA;AACA,kBAAA;;;",
+  "names": []
+}

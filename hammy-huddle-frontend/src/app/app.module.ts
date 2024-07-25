@@ -27,7 +27,9 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatDividerModule} from '@angular/material/divider';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { PostDetailsComponent } from './post-details/post-details.component';
     MatRippleModule,
     MatPaginatorModule,
     MatInputModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [
     provideAnimationsAsync()

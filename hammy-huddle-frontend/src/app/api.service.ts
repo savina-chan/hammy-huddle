@@ -11,6 +11,7 @@ import { Observable } from "rxjs";
 import { Login } from "./login";
 import { Post } from "./forum-page/forum-page.component"
 import { supervisor } from "./supervisor.service";
+import { Replies } from "./post-details/post-details.component";
 
 @Injectable({
   providedIn: "root",
@@ -48,6 +49,27 @@ export class ApiService {
     return this.http.get<Post[]>(this.url + "api/getForumPosts");
   }
 
+  getForumPostById(id: string): Observable<Post> {
+    return this.http.get<Post>(`${this.url}api/getForumPost/${id}`);
+  }
+
+  getForumPostRepliesById(id: string): Observable<Replies> {
+    return this.http.get<Replies>(`${this.url}api/getForumPostReplies/${id}`);
+  }
+
+  sendForumReply(data:{content: string, parentId: string}){
+    const token = supervisor.getItem("token");
+    if (token) {
+      const headers = new HttpHeaders({
+        authorization: token,
+      });
+      return this.http.post(this.url + "api/forumReply", data, {
+        headers,
+      });
+    }
+    // return an empty object
+    return new Observable<Object>();
+  }
   /* ************* LOGIN HELPERS ************** */
 
   logout() {

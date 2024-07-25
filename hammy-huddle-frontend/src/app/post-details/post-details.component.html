@@ -1,1 +1,47 @@
-<p>post-details works!</p>
+<app-header></app-header>
+<div class="main-content" *ngIf="post">
+    <button mat-button (click)="navForum()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to All Posts
+    </button>
+    <h2>Post</h2>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{ post.title }}</mat-card-title>
+            <mat-card-subtitle>by {{ post.author }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            {{ post.content }}
+        </mat-card-content>
+    </mat-card>
+    <div class="comments-section">
+        <h3>Comments</h3>
+        <div class="editor">
+            <form class="form-inline">
+                <mat-form-field class="full-width">
+                    <input matInput type="text" placeholder="Write a reply/comment" name="content" [(ngModel)]="content">
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" (click)="sendReply()">Post</button>
+            </form>
+        </div>        
+        <mat-divider></mat-divider>
+        <mat-list *ngIf="this.replies.length > 0">
+            <div class="replies" *ngFor="let reply of this.replies">
+                <mat-list-item>
+                    <span matListItemLine>Author: <strong>{{reply.author}}</strong></span>
+                    <span matListItemTitle>{{reply.content}}</span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+        </mat-list>
+        <mat-list *ngIf="this.replies.length === 0" class="replies">
+            <mat-list-item>
+                <span matListItemLine>Be the first to reply!</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </mat-list>
+    </div>
+</div>
+<div class="main-content" *ngIf="!post">
+    The post you are looking for cannot be found. Try again later.
+</div>

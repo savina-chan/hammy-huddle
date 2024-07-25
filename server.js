@@ -72,11 +72,32 @@ const postSchema = new mongoose.Schema({
   }
 });
 
+const replySchema = new mongoose.Schema({
+  author: {
+    type: String,
+    required: true,
+  },
+  parentId: {
+    type: String,
+    required: true,
+  },
+  replyId: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  }
+});
+
 const User = mongoose.model("User", userSchema);
 
 const forumPost = mongoose.model("forumPosts", postSchema);
 
 const Stats = mongoose.model("statistics", statisticsSchema);
+
+const Replies = mongoose.model("replies", replySchema);
 
 app.use(express.json());
 
@@ -190,6 +211,51 @@ app.get("/api/getForumPosts", async (req, res) =>{
   try {
     const posts = await forumPost.find();
     res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/api/getForumPost/:id", async (req, res) =>{
+  try {
+    const post = await forumPost.findOne({postId: req.params.id});
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post("/api/forumReply", authenticateToken, async (req, res) => {
+  const {content, parentId} = req.body;
+  const author = req.user.username;
+
+  try {
+
+    const userStats = await Stats.findOne({"username": author});
+
+    const replyId = author + userStats.contributions;
+
+    const newReply = new Replies({
+      author,
+      parentId,
+      replyId,
+      content,
+
+    });
+
+    const updatedStats = await Stats.findOneAndUpdate({"username": author}, {$inc:{contributions: 1}});
+
+    const savedPost = await newReply.save();
+    res.status(201).json(savedPost);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/api/getForumPostReplies/:id", async (req, res) =>{
+  try {
+    const replies = await Replies.find({parentId: req.params.id});
+    res.status(200).json(replies);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
